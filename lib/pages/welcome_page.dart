@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:student_repository/components/rounded_button.dart';
 
 class WelcomePage extends StatefulWidget {
   WelcomePage({Key? key, required this.title}) : super(key: key);
@@ -33,7 +34,19 @@ class _WelcomePageState extends State<WelcomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            RoundedButton(
+                colour: Colors.greenAccent, label: 'Log In', onPressed: () {}),
+            RoundedButton(
+                colour: Colors.green, label: 'Register', onPressed: () {}),
+          ],
+        ),
+      ),
     ); // This trailing comma makes auto-formatting nicer for build methods.
   }
 }
