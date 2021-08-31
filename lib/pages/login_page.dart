@@ -43,7 +43,8 @@ class _LoginPageState extends State<LoginPage> {
                   return null;
                 },
                 decoration: InputDecoration(
-                  hintText: 'E-mail',
+                  hintText: 'Enter E-mail',
+                  labelText: 'E-mail',
                 ),
               ),
               SizedBox(
@@ -59,7 +60,10 @@ class _LoginPageState extends State<LoginPage> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(hintText: 'Enter password'),
+                decoration: InputDecoration(
+                  hintText: 'Enter password',
+                  labelText: 'Password',
+                ),
               ),
               SizedBox(
                 height: 24.0,

@@ -46,7 +46,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   return null;
                 },
                 decoration: InputDecoration(
-                  hintText: 'E-mail',
+                  hintText: 'Enter E-mail',
+                  labelText: 'E-mail',
                 ),
               ),
               SizedBox(
@@ -63,7 +64,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   p0 = value;
                   return null;
                 },
-                decoration: InputDecoration(hintText: 'Enter password'),
+                decoration: InputDecoration(
+                  hintText: 'Enter password',
+                  labelText: 'Password',
+                ),
               ),
               SizedBox(
                 height: 8.0,
@@ -79,7 +83,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   p1 = value;
                   return p0 == p1 ? null : 'Passwords do not match!';
                 },
-                decoration: InputDecoration(hintText: 'Confirm password'),
+                decoration: InputDecoration(
+                  hintText: 'Confirm password',
+                  labelText: 'Password',
+                ),
               ),
               SizedBox(
                 height: 24.0,
