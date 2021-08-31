@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:student_repository/components/rounded_button.dart';
+import 'package:student_repository/services/authentication.dart';
 
 class RegistrationPage extends StatefulWidget {
   static const String id = 'registration';
@@ -13,6 +15,8 @@ class RegistrationPage extends StatefulWidget {
 
 class _RegistrationPageState extends State<RegistrationPage> {
   late final String p0, p1;
+  final TextEditingController emailControl = TextEditingController(),
+      pwdControl = TextEditingController();
 
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
@@ -36,6 +40,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               TextFormField(
+                controller: emailControl,
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.emailAddress,
                 onChanged: (value) {},
@@ -54,6 +59,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 height: 8.0,
               ),
               TextFormField(
+                controller: pwdControl,
                 obscureText: true,
                 textAlign: TextAlign.center,
                 onChanged: (value) {},
@@ -102,6 +108,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Processing Data')),
                     );
+
+                    context.read<Authentication>().register(
+                        email: emailControl.text, pwd: pwdControl.text);
                   } else {
                     // _regFormKey.currentState!.reset();
                   }
