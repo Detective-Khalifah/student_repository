@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "614899299369",
+    "project_id": "student-repository-4560a",
+    "storage_bucket": "student-repository-4560a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:614899299369:android:69e3c69c5ed49789771838",
+        "android_client_info": {
+          "package_name": "com.blogspot.thengnet.student_repository"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "614899299369-bdlq8mhp1sofv8ljhkm6094ad804gmrp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3IrwovcZHhup8KXleAQvYKLUtS6REQ7U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "614899299369-bdlq8mhp1sofv8ljhkm6094ad804gmrp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
