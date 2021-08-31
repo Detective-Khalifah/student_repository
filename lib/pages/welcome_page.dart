@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:student_repository/components/rounded_button.dart';
 
 class WelcomePage extends StatefulWidget {
+  static const String id = 'welcome';
+
   WelcomePage({Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
