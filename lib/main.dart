@@ -31,7 +31,9 @@ class MyApp extends StatelessWidget {
         WelcomePage.id: (context) => WelcomePage(
               title: 'Student Repo',
             ),
-        RegistrationPage.id: (context) => RegistrationPage(),
+        RegistrationPage.id: (context) => RegistrationPage(
+              title: 'Register',
+            ),
         LoginPage.id: (context) => LoginPage(),
       },
     );
