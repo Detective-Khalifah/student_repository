@@ -28,6 +28,9 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: WelcomePage.id,
       routes: {
+        WelcomePage.id: (context) => WelcomePage(
+              title: 'Student Repo',
+            ),
         RegistrationPage.id: (context) => RegistrationPage(),
         LoginPage.id: (context) => LoginPage(),
       },
