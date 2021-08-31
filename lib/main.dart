@@ -34,7 +34,9 @@ class MyApp extends StatelessWidget {
         RegistrationPage.id: (context) => RegistrationPage(
               title: 'Register',
             ),
-        LoginPage.id: (context) => LoginPage(),
+        LoginPage.id: (context) => LoginPage(
+              title: 'Log In',
+            ),
       },
     );
   }
