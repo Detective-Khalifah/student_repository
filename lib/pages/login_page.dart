@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:student_repository/components/rounded_button.dart';
+import 'package:student_repository/services/authentication.dart';
 
 class LoginPage extends StatefulWidget {
   static const String id = 'login';
@@ -17,6 +19,8 @@ class _LoginPageState extends State<LoginPage> {
   //
   // Note: This is a `GlobalKey<FormState>`, not a GlobalKey<_LoginPageState>.
   final _logFormKey = GlobalKey<FormState>();
+  final TextEditingController _emailControl = TextEditingController(),
+      _pwdControl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               TextFormField(
+                controller: _emailControl,
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.emailAddress,
                 onChanged: (value) {},
@@ -51,6 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 8.0,
               ),
               TextFormField(
+                controller: _pwdControl,
                 obscureText: true,
                 textAlign: TextAlign.center,
                 onChanged: (value) {},
@@ -79,6 +85,8 @@ class _LoginPageState extends State<LoginPage> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Processing Data')),
                     );
+                    context.read<Authentication>().logIn(
+                        email: _emailControl.text, pwd: _pwdControl.text);
                   } else {
                     // _logFormKey.currentState!.reset();
                   }
