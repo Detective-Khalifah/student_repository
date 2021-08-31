@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:student_repository/components/rounded_button.dart';
+import 'package:student_repository/pages/login_page.dart';
+import 'package:student_repository/pages/registration_page.dart';
 
 class WelcomePage extends StatefulWidget {
   static const String id = 'welcome';
@@ -43,9 +45,19 @@ class _WelcomePageState extends State<WelcomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             RoundedButton(
-                colour: Colors.greenAccent, label: 'Log In', onPressed: () {}),
+              colour: Colors.greenAccent,
+              label: 'Log In',
+              onPressed: () {
+                Navigator.pushNamed(context, LoginPage.id);
+              },
+            ),
             RoundedButton(
-                colour: Colors.green, label: 'Register', onPressed: () {}),
+              colour: Colors.green,
+              label: 'Register',
+              onPressed: () {
+                Navigator.pushNamed(context, RegistrationPage.id);
+              },
+            ),
           ],
         ),
       ),
