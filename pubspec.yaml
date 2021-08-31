@@ -37,6 +37,8 @@ dependencies:
   # Networking dependency
   http: ^0.13.3
 
+  provider: ^6.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
