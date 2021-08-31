@@ -65,6 +65,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 },
                 decoration: InputDecoration(hintText: 'Enter password'),
               ),
+              SizedBox(
+                height: 8.0,
+              ),
               TextFormField(
                 obscureText: true,
                 textAlign: TextAlign.center,
