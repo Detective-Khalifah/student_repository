@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:student_repository/components/rounded_button.dart';
+import 'package:student_repository/pages/home_page.dart';
 import 'package:student_repository/services/authentication.dart';
 
 class LoginPage extends StatefulWidget {
@@ -85,8 +86,11 @@ class _LoginPageState extends State<LoginPage> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Processing Data')),
                     );
-                    context.read<Authentication>().logIn(
+
+                    final login = await context.read<Authentication>().logIn(
                         email: _emailControl.text, pwd: _pwdControl.text);
+                    if (login == "Logged in!")
+                      Navigator.pushNamed(context, HomePage.id);
                   } else {
                     // _logFormKey.currentState!.reset();
                   }
