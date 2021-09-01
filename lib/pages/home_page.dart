@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:student_repository/pages/welcome_page.dart';
 import 'package:student_repository/services/authentication.dart';
 
 final _firestore = FirebaseFirestore.instance;
@@ -34,7 +35,7 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             onPressed: () {
               context.read<Authentication>().logOut();
-              Navigator.pop(context);
+              Navigator.popAndPushNamed(context, WelcomePage.id);
             },
             icon: Icon(Icons.directions_run),
           )
