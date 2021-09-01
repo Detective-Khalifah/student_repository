@@ -1,7 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:student_repository/components/rounded_button.dart';
 import 'package:student_repository/services/authentication.dart';
+
+import 'home_page.dart';
+
+final _firestore = FirebaseFirestore.instance;
+late String fName,
+    mName,
+    lName,
+    phone,
+    address,
+    state,
+    lga,
+    dept,
+    matriculation;
 
 class RegistrationPage extends StatefulWidget {
   static const String id = 'registration';
@@ -42,7 +56,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 controller: emailControl,
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.emailAddress,
-                onChanged: (value) {},
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'E-mail must be entered!';
@@ -101,7 +114,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
               TextFormField(
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.name,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  fName = value;
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Name must be entered!';
@@ -118,7 +133,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
               TextFormField(
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.name,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  mName = value;
+                },
                 // validator: (value) {
                 //   if (value == null || value.isEmpty) {
                 //     return 'Middle  must be entered!';
@@ -135,7 +152,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
               TextFormField(
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.name,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  lName = value;
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Last Name must be entered!';
@@ -152,7 +171,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
               TextFormField(
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.phone,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  phone = value;
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Phone number must be entered!';
@@ -169,7 +190,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
               TextFormField(
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.streetAddress,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  address = value;
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Address must be entered!';
@@ -186,7 +209,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
               TextFormField(
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.streetAddress,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  state = value;
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'State must be entered!';
@@ -203,7 +228,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
               TextFormField(
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.streetAddress,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  lga = value;
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'L. G. A. must be entered!';
@@ -220,7 +247,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
               TextFormField(
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.multiline,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  dept = value;
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Department must be entered!';
@@ -237,7 +266,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
               TextFormField(
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.name,
-                onChanged: (value) {},
+                onChanged: (value) {
+                  matriculation = value;
+                },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Matriculation # must be entered!';
@@ -263,8 +294,26 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       const SnackBar(content: Text('Processing Data')),
                     );
 
-                    context.read<Authentication>().register(
-                        email: emailControl.text, pwd: pwdControl.text);
+                    final registration = await context
+                        .read<Authentication>()
+                        .register(
+                            email: emailControl.text, pwd: pwdControl.text);
+
+                    _firestore.collection('students').add({
+                      'e-mail': emailControl.text,
+                      'First Name': fName,
+                      'Middle Name': mName,
+                      'Last Name': lName,
+                      'Phone': phone,
+                      'Address': address,
+                      'State of Origin': state,
+                      'Local Government (of Origin)': lga,
+                      'Department': dept,
+                      'Matriculation Number': matriculation,
+                    });
+
+                    if (registration != "Registered!")
+                      Navigator.pushNamed(context, HomePage.id);
                   } else {
                     // _regFormKey.currentState!.reset();
                   }
