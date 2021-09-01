@@ -6,6 +6,15 @@ import 'package:provider/provider.dart';
 import 'package:student_repository/services/authentication.dart';
 
 final _firestore = FirebaseFirestore.instance;
+late String fName,
+    mName,
+    lName,
+    phone,
+    address,
+    state,
+    lga,
+    dept,
+    matriculation;
 
 class HomePage extends StatefulWidget {
   static const String id = 'home';
@@ -37,7 +46,7 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           scrollDirection: Axis.vertical,
           children: [
-            DataStream(),
+            // TODO: Find a better Widget, call #DataStream() here
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: CircleAvatar(
@@ -46,68 +55,7 @@ class _HomePageState extends State<HomePage> {
                 maxRadius: 100,
               ),
             ),
-            DataTable(
-              columns: [
-                DataColumn(label: Text('Metrics')),
-                DataColumn(label: Text('Deets'))
-              ],
-              rows: [
-                DataRow(
-                  cells: [
-                    DataCell(Text('First Name')),
-                    DataCell(Text('A.')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('First Name')),
-                    DataCell(Text('A.')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('First Name')),
-                    DataCell(Text('A.')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('First Name')),
-                    DataCell(Text('A.')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('First Name')),
-                    DataCell(Text('A.')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('First Name')),
-                    DataCell(Text('A.')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('First Name')),
-                    DataCell(Text('A.')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('First Name')),
-                    DataCell(Text('A.')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('First Name')),
-                    DataCell(Text('A.')),
-                  ],
-                ),
-              ],
-            ),
+            DataStream()
           ],
         ),
       ),
@@ -131,12 +79,85 @@ class DataStream extends StatelessWidget {
 
         final students = snapshot.data!.docs;
         for (var student in students) {
-          if (student.get('e-mail') == context.read<User>().email) {
-            print('User ${context.read<User>().email} located!');
+          final String student_mail = student
+              .get('e-mail'); // TODO: Use matriculation number or username
+          if (student_mail == context.read<User>().email) {
+            fName = student.get('First Name');
+            mName = student.get('Middle Name');
+            lName = student.get('Last Name');
+            phone = student.get('Phone').toString();
+            address = student.get('Address');
+            state = student.get('State of Origin');
+            lga = student.get('Local Government (of Origin)');
+            dept = student.get('Department');
+            matriculation = student.get('Matriculation Number');
+
+            return DataTable(
+              columns: [
+                DataColumn(label: Text('Metrics')),
+                DataColumn(label: Text('Deets'))
+              ],
+              rows: [
+                DataRow(
+                  cells: [
+                    DataCell(Text('First Name')),
+                    DataCell(Text('$fName')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('Middle Name')),
+                    DataCell(Text('$mName')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('Last Name')),
+                    DataCell(Text('$lName')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('Phone')),
+                    DataCell(Text('$phone')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('Address')),
+                    DataCell(Text('$address')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('State')),
+                    DataCell(Text('$state')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('L. G. A.')),
+                    DataCell(Text('$lga')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('Department')),
+                    DataCell(Text('$dept')),
+                  ],
+                ),
+                DataRow(
+                  cells: [
+                    DataCell(Text('Matriculation #')),
+                    DataCell(Text('$matriculation')),
+                  ],
+                ),
+              ],
+            );
           } else
             print('Couldn\'t find user');
         }
-        return Text('Eureka!');
+        return Center(child: Text('Eureka!'));
       },
     );
   }
