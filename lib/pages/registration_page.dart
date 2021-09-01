@@ -35,9 +35,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
         key: _regFormKey,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: ListView(
+            scrollDirection: Axis.vertical,
             children: <Widget>[
               TextFormField(
                 controller: emailControl,
@@ -96,6 +95,161 @@ class _RegistrationPageState extends State<RegistrationPage> {
               ),
               SizedBox(
                 height: 24.0,
+              ),
+              // TODO: Consider which of middle & last names can be edited --
+              //  Adele hasn't a last, most don't have a middle, or hide it.
+              TextFormField(
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.name,
+                onChanged: (value) {},
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Name must be entered!';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'First Name',
+                ),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextFormField(
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.name,
+                onChanged: (value) {},
+                // validator: (value) {
+                //   if (value == null || value.isEmpty) {
+                //     return 'Middle  must be entered!';
+                //   }
+                //   return null;
+                // },
+                decoration: InputDecoration(
+                  labelText: 'Middle Name',
+                ),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextFormField(
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.name,
+                onChanged: (value) {},
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Last Name must be entered!';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Last Name',
+                ),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextFormField(
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.phone,
+                onChanged: (value) {},
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Phone number must be entered!';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Phone Number',
+                ),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextFormField(
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.streetAddress,
+                onChanged: (value) {},
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Address must be entered!';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Address',
+                ),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextFormField(
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.streetAddress,
+                onChanged: (value) {},
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'State must be entered!';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'State of Origin',
+                ),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextFormField(
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.streetAddress,
+                onChanged: (value) {},
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'L. G. A. must be entered!';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Local Government Area',
+                ),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextFormField(
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.multiline,
+                onChanged: (value) {},
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Department must be entered!';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Department',
+                ),
+              ),
+              SizedBox(
+                height: 8.0,
+              ),
+              TextFormField(
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.name,
+                onChanged: (value) {},
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Matriculation # must be entered!';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Matriculation Number',
+                ),
+              ),
+              SizedBox(
+                height: 8.0,
               ),
               RoundedButton(
                 colour: Colors.green,
