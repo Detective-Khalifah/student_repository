@@ -58,6 +58,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   void initState() {
+    super.initState();
     matriculation = widget.matriculation;
   }
 }
