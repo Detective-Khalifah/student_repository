@@ -47,6 +47,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             icon: Icon(Icons.directions_run),
           )
         ],
+        title: Text('Edit Profile'),
       ),
       backgroundColor: Colors.yellowAccent,
       body: Padding(

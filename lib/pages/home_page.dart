@@ -22,8 +22,9 @@ late String fName,
 
 class HomePage extends StatefulWidget {
   static const String id = 'home';
+  final String title;
 
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key, required this.title}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -41,8 +42,10 @@ class _HomePageState extends State<HomePage> {
               Navigator.popAndPushNamed(context, WelcomePage.id);
             },
             icon: Icon(Icons.directions_run),
+            tooltip: 'Log out',
           )
         ],
+        title: Text(widget.title),
       ),
       backgroundColor: Colors.yellowAccent,
       body: Padding(

@@ -21,7 +21,9 @@ class _ViewCoursesPageState extends State<ViewCoursesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('View Courses'),
+      ),
       body: ListView(
         children: [
           StreamBuilder<QuerySnapshot>(

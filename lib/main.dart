@@ -59,11 +59,17 @@ class MyApp extends StatelessWidget {
           LoginPage.id: (context) => LoginPage(
                 title: 'Log In',
               ),
-          HomePage.id: (context) => HomePage(),
-          EditCoursesPage.id: (context) => EditCoursesPage(),
+          HomePage.id: (context) => HomePage(title: 'Home'),
         },
         onGenerateRoute: (setting) {
           switch (setting.name) {
+            case EditCoursesPage.id:
+              final args = setting.arguments as ProfileArguments;
+
+              return MaterialPageRoute(builder: (context) {
+                return EditCoursesPage(matriculation: args.matriculation);
+              });
+
             case EditProfilePage.id:
               final args = setting.arguments as ProfileArguments;
 
@@ -93,8 +99,8 @@ class AuthenticationWrapper extends StatelessWidget {
     final _student = context.watch<User?>();
 
     if (_student != null) {
-      return HomePage();
+      return HomePage(title: 'My Profile');
     }
-    return WelcomePage(title: 'Welcome');
+    return WelcomePage(title: 'Student Repo');
   }
 }
