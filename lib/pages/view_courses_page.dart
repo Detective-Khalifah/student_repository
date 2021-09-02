@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:student_repository/pages/edit_courses_page.dart';
+import 'package:student_repository/utilities/profile_args.dart';
 
 final _firestore = FirebaseFirestore.instance;
 
@@ -24,7 +23,7 @@ class _ViewCoursesPageState extends State<ViewCoursesPage> {
       appBar: AppBar(),
       body: Column(children: [
         StreamBuilder<QuerySnapshot>(
-          stream: _firestore.collection('student_courses').snapshots(),
+          stream: _firestore.collection('courses').snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return Center(
@@ -35,22 +34,30 @@ class _ViewCoursesPageState extends State<ViewCoursesPage> {
             }
 
             final courseRegistrations = snapshot.data!.docs;
+            List<DataRow> myRow = [];
             for (var courseReg in courseRegistrations) {
-              if (courseReg.id == widget.matriculation) {
-                print(
-                    '1st Courses: ${courseReg.get('first_registered_courses')}');
-                print(
-                    '2nd Courses: ${courseReg.get('second_registered_courses')}');
+              String title = courseReg.get('title');
+              String cu = courseReg.get('credit_units').toString();
+              String code = 'yes';
 
-                return CoursesTable();
-              }
+              print('1st Courses: $title}');
+              print('2nd Courses: $cu}');
+
+              myRow.add(_getRow(code, title, cu));
+              // return CoursesTable();
             }
+            return DataTable(columns: [
+              DataColumn(label: Text('Code')),
+              DataColumn(label: Text('Title')),
+              DataColumn(label: Text('CU'))
+            ], rows: myRow);
             return Center(child: Text('Eureka!'));
           },
         ),
         ElevatedButton(
             onPressed: () {
-              Navigator.pushNamed(context, EditCoursesPage.id);
+              Navigator.pushNamed(context, EditCoursesPage.id,
+                  arguments: ProfileArguments(widget.matriculation));
             },
             child: Text('Edit Courses')),
       ]),
@@ -59,72 +66,30 @@ class _ViewCoursesPageState extends State<ViewCoursesPage> {
 }
 
 class CoursesTable extends StatelessWidget {
-  const CoursesTable({Key? key}) : super(key: key);
+  final String? code, title, cu;
+
+  const CoursesTable(
+      {Key? key, this.code, required this.title, required this.cu});
 
   @override
   Widget build(BuildContext context) {
-    return Center();
-    // return DataTable(
-    //   columns: [
-    //     DataColumn(label: Text('Metrics')),
-    //     DataColumn(label: Text('Deets'))
-    //   ],
-    //   rows: [
-    //     DataRow(
-    //       cells: [
-    //         DataCell(Text('First Name')),
-    //         DataCell(Text('$fName')),
-    //       ],
-    //     ),
-    //     DataRow(
-    //       cells: [
-    //         DataCell(Text('Middle Name')),
-    //         DataCell(Text('$mName')),
-    //       ],
-    //     ),
-    //     DataRow(
-    //       cells: [
-    //         DataCell(Text('Last Name')),
-    //         DataCell(Text('$lName')),
-    //       ],
-    //     ),
-    //     DataRow(
-    //       cells: [
-    //         DataCell(Text('Phone')),
-    //         DataCell(Text('$phone')),
-    //       ],
-    //     ),
-    //     DataRow(
-    //       cells: [
-    //         DataCell(Text('Address')),
-    //         DataCell(Text('$address')),
-    //       ],
-    //     ),
-    //     DataRow(
-    //       cells: [
-    //         DataCell(Text('State')),
-    //         DataCell(Text('$state')),
-    //       ],
-    //     ),
-    //     DataRow(
-    //       cells: [
-    //         DataCell(Text('L. G. A.')),
-    //         DataCell(Text('$lga')),
-    //       ],
-    //     ),
-    //     DataRow(
-    //       cells: [
-    //         DataCell(Text('Department')),
-    //         DataCell(Text('$dept')),
-    //       ],
-    //     ),
-    //     DataRow(
-    //       cells: [
-    //         DataCell(Text('Matriculation #')),
-    //         DataCell(Text('$matriculation')),
-    //       ],
-    //     ),
-    //   ],
-    // );
+    return DataTable(
+      columns: [
+        DataColumn(label: Text('Code')),
+        DataColumn(label: Text('Title')),
+        DataColumn(label: Text('CU'))
+      ],
+      rows: [_getRow(code!, title!, cu == null ? '' : cu)],
+    );
   }
+}
+
+DataRow _getRow(String code, String title, String? cu) {
+  return DataRow(
+    cells: [
+      DataCell(Text('$code')),
+      DataCell(Text('$title')),
+      DataCell(Text('$cu')),
+    ],
+  );
 }
