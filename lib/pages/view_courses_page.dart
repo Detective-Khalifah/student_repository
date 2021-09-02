@@ -21,46 +21,49 @@ class _ViewCoursesPageState extends State<ViewCoursesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(children: [
-        StreamBuilder<QuerySnapshot>(
-          stream: _firestore.collection('courses').snapshots(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: Colors.grey,
-                ),
-              );
-            }
+      body: ListView(
+        children: [
+          StreamBuilder<QuerySnapshot>(
+            stream: _firestore.collection('courses').snapshots(),
+            builder: (context, snapshot) {
+              if (!snapshot.hasData) {
+                return Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.grey,
+                  ),
+                );
+              }
 
-            final courseRegistrations = snapshot.data!.docs;
-            List<DataRow> myRow = [];
-            for (var courseReg in courseRegistrations) {
-              String title = courseReg.get('title');
-              String cu = courseReg.get('credit_units').toString();
-              String code = 'yes';
+              final courseRegistrations = snapshot.data!.docs;
+              List<DataRow> myRow = [];
+              for (var courseReg in courseRegistrations) {
+                String title = courseReg.get('title');
+                String cu = courseReg.get('credit_units').toString();
+                String code = courseReg.get('code');
 
-              print('1st Courses: $title}');
-              print('2nd Courses: $cu}');
+                print('Code: $code}');
+                print('Title: $title}');
+                print('CU: $cu}');
 
-              myRow.add(_getRow(code, title, cu));
-              // return CoursesTable();
-            }
-            return DataTable(columns: [
-              DataColumn(label: Text('Code')),
-              DataColumn(label: Text('Title')),
-              DataColumn(label: Text('CU'))
-            ], rows: myRow);
-            return Center(child: Text('Eureka!'));
-          },
-        ),
-        ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, EditCoursesPage.id,
-                  arguments: ProfileArguments(widget.matriculation));
+                myRow.add(_getRow(code, title, cu));
+                // return CoursesTable();
+              }
+              return DataTable(columns: [
+                DataColumn(label: Text('Code')),
+                DataColumn(label: Text('Title')),
+                DataColumn(label: Text('CU'))
+              ], rows: myRow);
+              return Center(child: Text('Eureka!'));
             },
-            child: Text('Edit Courses')),
-      ]),
+          ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, EditCoursesPage.id,
+                    arguments: ProfileArguments(widget.matriculation));
+              },
+              child: Text('Edit Courses')),
+        ],
+      ),
     );
   }
 }
