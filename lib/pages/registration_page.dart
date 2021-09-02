@@ -282,43 +282,46 @@ class _RegistrationPageState extends State<RegistrationPage> {
               SizedBox(
                 height: 8.0,
               ),
-              RoundedButton(
-                colour: Colors.green,
-                label: 'Register',
-                onPressed: () async {
-                  // Validate returns true if the form is valid, or false otherwise.
-                  if (_regFormKey.currentState!.validate()) {
-                    // If the form is valid, display a snackbar. In the real world,
-                    // you'd often call a server or save the information in a database.
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
-                    );
+              Hero(
+                tag: 'reg',
+                child: RoundedButton(
+                  colour: Colors.green,
+                  label: 'Register',
+                  onPressed: () async {
+                    // Validate returns true if the form is valid, or false otherwise.
+                    if (_regFormKey.currentState!.validate()) {
+                      // If the form is valid, display a snackbar. In the real world,
+                      // you'd often call a server or save the information in a database.
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Processing Data')),
+                      );
 
-                    final registration = await context
-                        .read<Authentication>()
-                        .register(
-                            email: emailControl.text, pwd: pwdControl.text);
+                      final registration = await context
+                          .read<Authentication>()
+                          .register(
+                              email: emailControl.text, pwd: pwdControl.text);
 
-                    _firestore.collection('students').add({
-                      'e-mail': emailControl.text,
-                      'First Name': fName,
-                      'Middle Name': mName,
-                      'Last Name': lName,
-                      'Phone': phone,
-                      'Address': address,
-                      'State of Origin': state,
-                      'Local Government (of Origin)': lga,
-                      'Department': dept,
-                      'Matriculation Number': matriculation,
-                    });
+                      _firestore.collection('students').add({
+                        'e-mail': emailControl.text,
+                        'First Name': fName,
+                        'Middle Name': mName,
+                        'Last Name': lName,
+                        'Phone': phone,
+                        'Address': address,
+                        'State of Origin': state,
+                        'Local Government (of Origin)': lga,
+                        'Department': dept,
+                        'Matriculation Number': matriculation,
+                      });
 
-                    if (registration != "Registered!")
-                      Navigator.pushNamed(context, HomePage.id);
-                  } else {
-                    // _regFormKey.currentState!.reset();
-                  }
-                  setState(() {});
-                },
+                      if (registration != "Registered!")
+                        Navigator.pushNamed(context, HomePage.id);
+                    } else {
+                      // _regFormKey.currentState!.reset();
+                    }
+                    setState(() {});
+                  },
+                ),
               ),
             ],
           ),

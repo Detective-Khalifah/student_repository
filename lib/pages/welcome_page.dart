@@ -44,19 +44,26 @@ class _WelcomePageState extends State<WelcomePage> {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            RoundedButton(
-              colour: Colors.greenAccent,
-              label: 'Log In',
-              onPressed: () {
-                Navigator.pushNamed(context, LoginPage.id);
-              },
+            Image.asset('assets/images/kasu_logo.png'),
+            Hero(
+              tag: 'log',
+              child: RoundedButton(
+                colour: Colors.greenAccent,
+                label: 'Log In',
+                onPressed: () {
+                  Navigator.pushNamed(context, LoginPage.id);
+                },
+              ),
             ),
-            RoundedButton(
-              colour: Colors.green,
-              label: 'Register',
-              onPressed: () {
-                Navigator.pushNamed(context, RegistrationPage.id);
-              },
+            Hero(
+              tag: 'reg',
+              child: RoundedButton(
+                colour: Colors.green,
+                label: 'Register',
+                onPressed: () {
+                  Navigator.pushNamed(context, RegistrationPage.id);
+                },
+              ),
             ),
           ],
         ),

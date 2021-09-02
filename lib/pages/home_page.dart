@@ -71,6 +71,7 @@ class _HomePageState extends State<HomePage> {
                     child: Text('Courses'),
                   ),
                 ),
+                SizedBox(width: 20),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
