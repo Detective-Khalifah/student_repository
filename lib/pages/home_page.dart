@@ -104,9 +104,9 @@ class DataStream extends StatelessWidget {
 
         final students = snapshot.data!.docs;
         for (var student in students) {
-          final String student_mail = student
+          final String studentMail = student
               .get('e-mail'); // TODO: Use matriculation number or username
-          if (student_mail == context.read<User>().email) {
+          if (studentMail == context.read<User>().email) {
             fName = student.get('First Name');
             mName = student.get('Middle Name');
             lName = student.get('Last Name');
@@ -117,73 +117,81 @@ class DataStream extends StatelessWidget {
             dept = student.get('Department');
             matriculation = student.get('Matriculation Number');
 
-            return DataTable(
-              columns: [
-                DataColumn(label: Text('Metrics')),
-                DataColumn(label: Text('Deets'))
-              ],
-              rows: [
-                DataRow(
-                  cells: [
-                    DataCell(Text('First Name')),
-                    DataCell(Text('$fName')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('Middle Name')),
-                    DataCell(Text('$mName')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('Last Name')),
-                    DataCell(Text('$lName')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('Phone')),
-                    DataCell(Text('$phone')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('Address')),
-                    DataCell(Text('$address')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('State')),
-                    DataCell(Text('$state')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('L. G. A.')),
-                    DataCell(Text('$lga')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('Department')),
-                    DataCell(Text('$dept')),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    DataCell(Text('Matriculation #')),
-                    DataCell(Text('$matriculation')),
-                  ],
-                ),
-              ],
-            );
-          } else
-            print('Couldn\'t find user');
+            return ProfileTable();
+          }
         }
         return Center(child: Text('Eureka!'));
       },
+    );
+  }
+}
+
+class ProfileTable extends StatelessWidget {
+  const ProfileTable({Key? key});
+
+  @override
+  Widget build(BuildContext context) {
+    return DataTable(
+      columns: [
+        DataColumn(label: Text('Metrics')),
+        DataColumn(label: Text('Deets'))
+      ],
+      rows: [
+        DataRow(
+          cells: [
+            DataCell(Text('First Name')),
+            DataCell(Text('$fName')),
+          ],
+        ),
+        DataRow(
+          cells: [
+            DataCell(Text('Middle Name')),
+            DataCell(Text('$mName')),
+          ],
+        ),
+        DataRow(
+          cells: [
+            DataCell(Text('Last Name')),
+            DataCell(Text('$lName')),
+          ],
+        ),
+        DataRow(
+          cells: [
+            DataCell(Text('Phone')),
+            DataCell(Text('$phone')),
+          ],
+        ),
+        DataRow(
+          cells: [
+            DataCell(Text('Address')),
+            DataCell(Text('$address')),
+          ],
+        ),
+        DataRow(
+          cells: [
+            DataCell(Text('State')),
+            DataCell(Text('$state')),
+          ],
+        ),
+        DataRow(
+          cells: [
+            DataCell(Text('L. G. A.')),
+            DataCell(Text('$lga')),
+          ],
+        ),
+        DataRow(
+          cells: [
+            DataCell(Text('Department')),
+            DataCell(Text('$dept')),
+          ],
+        ),
+        DataRow(
+          cells: [
+            DataCell(Text('Matriculation #')),
+            DataCell(Text('$matriculation')),
+          ],
+        ),
+      ],
     );
   }
 }
