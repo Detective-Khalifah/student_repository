@@ -3,8 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:student_repository/pages/edit_profile_page.dart';
+import 'package:student_repository/pages/view_courses_page.dart';
 import 'package:student_repository/pages/welcome_page.dart';
 import 'package:student_repository/services/authentication.dart';
+import 'package:student_repository/utilities/profile_args.dart';
 
 final _firestore = FirebaseFirestore.instance;
 late String fName,
@@ -56,7 +59,28 @@ class _HomePageState extends State<HomePage> {
                 maxRadius: 100,
               ),
             ),
-            DataStream()
+            DataStream(),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, ViewCoursesPage.id);
+                    },
+                    child: Text('Courses'),
+                  ),
+                ),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, EditProfilePage.id,
+                          arguments: ProfileArguments(matriculation));
+                    },
+                    child: Text('Profile'),
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),

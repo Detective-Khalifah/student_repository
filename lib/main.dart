@@ -2,11 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:student_repository/pages/edit_courses_page.dart';
+import 'package:student_repository/pages/edit_profile_page.dart';
 import 'package:student_repository/pages/home_page.dart';
 import 'package:student_repository/pages/login_page.dart';
 import 'package:student_repository/pages/registration_page.dart';
+import 'package:student_repository/pages/view_courses_page.dart';
 import 'package:student_repository/pages/welcome_page.dart';
 import 'package:student_repository/services/authentication.dart';
+import 'package:student_repository/utilities/profile_args.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,6 +59,20 @@ class MyApp extends StatelessWidget {
                 title: 'Log In',
               ),
           HomePage.id: (context) => HomePage(),
+          // EditProfilePage.id: (context) => EditProfilePage(),
+          EditCoursesPage.id: (context) => EditCoursesPage(),
+          ViewCoursesPage.id: (context) => ViewCoursesPage(),
+        },
+        onGenerateRoute: (setting) {
+          switch (setting.name) {
+            case EditProfilePage.id:
+              final args = setting.arguments as ProfileArguments;
+
+              return MaterialPageRoute(builder: (context) {
+                return EditProfilePage(matriculation: args.matriculation);
+              });
+            default:
+          }
         },
       ),
     );

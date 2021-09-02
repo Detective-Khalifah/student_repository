@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class EditCoursesPage extends StatefulWidget {
+  static const String id = 'edit_courses';
+
   const EditCoursesPage({Key? key}) : super(key: key);
 
   @override

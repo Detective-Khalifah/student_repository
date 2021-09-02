@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ViewCoursesPage extends StatefulWidget {
+  static const String id = 'view_courses';
+
   const ViewCoursesPage({Key? key}) : super(key: key);
 
   @override
