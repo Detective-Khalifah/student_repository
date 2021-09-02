@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:student_repository/pages/edit_courses_page.dart';
 import 'package:student_repository/utilities/profile_args.dart';
 
@@ -41,19 +42,13 @@ class _ViewCoursesPageState extends State<ViewCoursesPage> {
                 String cu = courseReg.get('credit_units').toString();
                 String code = courseReg.get('code');
 
-                print('Code: $code}');
-                print('Title: $title}');
-                print('CU: $cu}');
-
                 myRow.add(_getRow(code, title, cu));
-                // return CoursesTable();
               }
               return DataTable(columns: [
                 DataColumn(label: Text('Code')),
                 DataColumn(label: Text('Title')),
                 DataColumn(label: Text('CU'))
               ], rows: myRow);
-              return Center(child: Text('Eureka!'));
             },
           ),
           ElevatedButton(
@@ -90,9 +85,9 @@ class CoursesTable extends StatelessWidget {
 DataRow _getRow(String code, String title, String? cu) {
   return DataRow(
     cells: [
-      DataCell(Text('$code')),
-      DataCell(Text('$title')),
-      DataCell(Text('$cu')),
+      DataCell(Text('$code', style: GoogleFonts.adamina())),
+      DataCell(Text('$title', style: GoogleFonts.acme())),
+      DataCell(Text('$cu', style: GoogleFonts.alef())),
     ],
   );
 }
