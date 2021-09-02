@@ -21,9 +21,10 @@ class EditCoursesPage extends StatefulWidget {
 
 class _EditCoursesPageState extends State<EditCoursesPage> {
   late bool _hasRegisteredCoursesBefore = false;
-  late List<DropdownMenuItem<String>> dropdownMenus = [];
+  late String selectedCourse = '';
 
   late List<String> first_semester_choices, second_semester_choices;
+  late List<DropdownMenuItem<String>> dropdownMenus = [];
 
   @override
   void initState() {
@@ -100,46 +101,62 @@ class _EditCoursesPageState extends State<EditCoursesPage> {
         if (!snapshot.hasData)
           return Center(child: Text('No course could be fetched!'));
 
-        return Expanded(
-          child: ListView.separated(
-            itemBuilder: (context, index) {
-              final courses = snapshot.data!.docs;
-              addDocument();
-              // print(snap.get('first_semester'));
-              // print(snap.get('second_semester'));
+        return ListView.separated(
+          itemBuilder: (context, index) {
+            // final fcourses = snapshot.data!.docs[index].get(field);
+            // final scourses = snapshot.data!['second_semester'];
+            // print('First: ${fcourses.toString()}');
+            // print('First: $scourses');
+            // for (var course in fcourses) {
+            // String code = course.get('code');
+            // String title = course.get('title');
+            // int units = course.get('credit_units');
 
-              for (var course in courses) {
-                String code = course.get('code');
-                String title = course.get('title');
-                int units = course.get('credit_units');
+            // dropdownMenus.add(
+            //     getCourseDropdown(code: code, unit: units, title: title));
+            // }
 
-                dropdownMenus.add(
-                    getCourseDropdown(code: code, unit: units, title: title));
-              }
-
-              List<String> selectedItem = [];
-              for (int i = 0; i < 10; i++) {
-                selectedItem.add('NONE');
-              }
-              return DropdownButton(
-                hint: Text('4L Course'),
-                items: dropdownMenus,
-                value: selectedItem[index].toString(),
-                onChanged: (value) {
-                  setState(() {
-                    selectedItem[index] = value.toString();
-                  });
-                },
-              );
-            },
-            itemCount: 10,
-            scrollDirection: Axis.vertical,
-            separatorBuilder: (context, index) => SizedBox(
-              height: 8.0,
-            ),
+            List<String> selectedItem = [];
+            for (int i = 0; i < 10; i++) {
+              selectedItem.add('NONE');
+            }
+            return DropdownButton(
+              hint: Text('Pick a course'),
+              // value: snapshot.data!.docs[index].get('title'),
+              value: selectedCourse,
+              items: snapshot.data!.docs.map((course) {
+                return DropdownMenuItem(
+                  value: '${course.get('title')}', // WORKS
+                  // value:
+                  //     '[${value.get('code')}] -- ${value.get('title')}: ${value.get('credit_units')} credit units',
+                  child: Text(
+                    '[${course.get('code')}] -- ${course.get('title')}: ${course.get('credit_units')} CU',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                  ),
+                );
+              }).toList(),
+              onChanged: (chosenCourse) {
+                setState(
+                  () {
+                    print('Course selected: $chosenCourse');
+                    selectCourse(chosenCourse.toString());
+                  },
+                );
+              },
+            );
+          },
+          itemCount: snapshot.data!.docs.length,
+          scrollDirection: Axis.vertical,
+          separatorBuilder: (context, index) => SizedBox(
+            height: 8.0,
           ),
         );
       },
+      // final data = snapshot.data!['first_semester'];
+      // print(snap.get('first_semester'));
+      // print(snap.get('second_semester'));
     );
   }
 
@@ -147,22 +164,28 @@ class _EditCoursesPageState extends State<EditCoursesPage> {
   ///
   ///
   editRegistration() {
-    return StreamBuilder<QuerySnapshot>(
-      stream: _firestore.collection('courses').snapshots(),
+    return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+      stream: _firestore
+          .collection('courses')
+          .doc(widget.matriculation)
+          .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
           return Center(child: Text('No course could be fetched!'));
 
         return ListView.separated(
           itemBuilder: (context, index) {
-            final courses = snapshot.data!.docs;
-            for (var course in courses) {
-              String code = course.get('code');
-              String title = course.get('title');
-              int units = course.get('credit_units');
+            final fcourses = snapshot.data!['first_semester'];
+            final scourses = snapshot.data!['second_semester'];
+            print('First: ${fcourses.toString()}');
+            print('First: $scourses');
+            for (var course in fcourses) {
+              // String code = course.get('code');
+              // String title = course.get('title');
+              // int units = course.get('credit_units');
 
-              dropdownMenus.add(
-                  getCourseDropdown(code: code, unit: units, title: title));
+              // dropdownMenus.add(
+              //     getCourseDropdown(code: code, unit: units, title: title));
             }
 
             List<String> selectedItem = [];
@@ -188,5 +211,11 @@ class _EditCoursesPageState extends State<EditCoursesPage> {
         );
       },
     );
+  }
+
+  void selectCourse(String chosenCourse) {
+    setState(() {
+      selectedCourse = chosenCourse;
+    });
   }
 }
