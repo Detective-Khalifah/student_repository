@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
           appBarTheme: AppBarTheme(centerTitle: true, elevation: 2),
@@ -59,9 +60,7 @@ class MyApp extends StatelessWidget {
                 title: 'Log In',
               ),
           HomePage.id: (context) => HomePage(),
-          // EditProfilePage.id: (context) => EditProfilePage(),
           EditCoursesPage.id: (context) => EditCoursesPage(),
-          ViewCoursesPage.id: (context) => ViewCoursesPage(),
         },
         onGenerateRoute: (setting) {
           switch (setting.name) {
@@ -70,6 +69,13 @@ class MyApp extends StatelessWidget {
 
               return MaterialPageRoute(builder: (context) {
                 return EditProfilePage(matriculation: args.matriculation);
+              });
+
+            case ViewCoursesPage.id:
+              final args = setting.arguments as ProfileArguments;
+
+              return MaterialPageRoute(builder: (context) {
+                return ViewCoursesPage(matriculation: args.matriculation);
               });
             default:
           }

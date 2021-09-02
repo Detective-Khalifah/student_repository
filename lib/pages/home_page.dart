@@ -65,7 +65,8 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, ViewCoursesPage.id);
+                      Navigator.pushNamed(context, ViewCoursesPage.id,
+                          arguments: ProfileArguments(matriculation));
                     },
                     child: Text('Courses'),
                   ),
